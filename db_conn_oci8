@@ -1,0 +1,35 @@
+<?PHP
+include 'Connection.php';
+ set_time_limit(1000);
+$P_BILL_CYCLE_CODE =$_GET['P_BILL_CYCLE_CODE'];
+$P_ZONE_CODE =$_GET['P_ZONE_CODE'];
+ 
+ $curs = oci_new_cursor($conn);
+
+$stid = oci_parse($conn, "begin DPG_MINISTRY_REPORT.DPD_ZONE_WISE(:cur_data,:P_BILL_CYCLE_CODE,:P_ZONE_CODE); end;");
+
+
+oci_bind_by_name($stid, ":cur_data", $curs, -1, OCI_B_CURSOR);
+oci_bind_by_name($stid, ":P_BILL_CYCLE_CODE", $P_BILL_CYCLE_CODE, -1, SQLT_CHR);
+oci_bind_by_name($stid, ":P_ZONE_CODE", $P_ZONE_CODE, -1, SQLT_CHR);
+
+oci_execute($stid);
+oci_execute($curs);
+
+
+while (($row = oci_fetch_array($curs, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
+
+	
+  $output[]=$row;
+}
+// print($output);
+// print(gettype($output));
+print json_encode($output);
+
+oci_free_statement($stid);
+oci_free_statement($curs);
+oci_close($conn);
+
+
+
+?>
