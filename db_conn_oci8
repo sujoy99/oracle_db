@@ -33,3 +33,8 @@ oci_close($conn);
 
 
 ?>
+
+
+
+
+url=http://localhost/pdbmis/test.php?P_BILL_CYCLE_CODE=201912&P_ZONE_CODE=2
