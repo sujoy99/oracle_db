@@ -1,0 +1,40 @@
+import cx_Oracle
+
+try:
+    PDBMIS="(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 180.211.137.17)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ebps)))";
+
+    conn = cx_Oracle.connect("PDBMIS", "pdbmis123", PDBMIS)
+
+except:
+    print('Exception occured while creating a connection ', err)
+
+else:
+    try:
+        cur = conn.cursor()
+        cur.execute("select BILL_CYCLE_CODE from MIS_BILL_CYCLE_MASTER order by BILL_CYCLE_CODE desc")
+
+        for line in cur:
+            print(line)
+        
+        # $stid = oci_parse($conn, "begin DPG_MINISTRY_REPORT.DPD_ZONE_WISE(:cur_data,:P_BILL_CYCLE_CODE,:P_ZONE_CODE; end;");
+
+
+        # pet_name = 'Roger'
+        # owner_id = 1
+        # pet_type = 'dog'
+        # need_license = cur.var(str)
+ 
+        # # add a new pet
+        # new_pet_id = cur.callfunc('pet_manager.add_pet',list,[pet_name, owner_id, pet_type, need_license])
+ 
+        # print ("New pet id: {}\nLicense needed: {}".format(new_pet_id, need_license.getvalue()))
+        # cur.callproc("")
+    except Exception as err:
+        print('Exception raised while while executing the procedure ', err)
+
+    else:
+        print('Procedure Executed')
+    finally:
+        cur.close()
+finally:
+    conn.close()
