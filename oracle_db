@@ -1,0 +1,33 @@
+
+
+import cx_Oracle
+
+try: 
+    
+
+    PDBMIS="(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 180.211.137.17)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ebps)))";
+    # $conn = ocilogon( "PDBMIS", "pdbmis123",$PDBMIS,"WE8ISO8859P15");
+
+    con = cx_Oracle.connect("PDBMIS", "pdbmis123", PDBMIS)
+
+except Exception as err:
+    print("Exception occured while creating a connection", err)
+
+else: 
+    try:
+
+        cursor = con.cursor()
+
+        print("hello")
+
+    # cursor.execute("create table student(srollno number, names varchar2(10))") 
+    # print("Table Created successful")
+
+    except cx_Oracle.DatabaseError as e: 
+	    print("There is a problem with Oracle", e) 
+
+finally: 
+	if cursor: 
+		cursor.close() 
+	if con: 
+		con.close() 
