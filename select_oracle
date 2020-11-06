@@ -13,7 +13,13 @@ else:
         cur = conn.cursor()
         cur.execute("select BILL_CYCLE_CODE from MIS_BILL_CYCLE_MASTER order by BILL_CYCLE_CODE desc")
 
+        cur1 = conn.cursor()
+        cur1.execute("SELECT TO_CHAR( to_date('201912','YYYYmm'), 'FMMonth YYYY' ) as MYEAR FROM dual")
+
         for line in cur:
+            print(line)
+
+        for line in cur1:
             print(line)
         
         # $stid = oci_parse($conn, "begin DPG_MINISTRY_REPORT.DPD_ZONE_WISE(:cur_data,:P_BILL_CYCLE_CODE,:P_ZONE_CODE; end;");
